@@ -6,7 +6,7 @@
 
     <services>
         <service id="PP\ParallelBridge\PromiseWait" alias="pp_parallel_bridge.promise_wait" public="false" />
-        <service id="pp_parallel_bridge.promise_wait" class="PP\ParallelBridge\PromiseWait" public="false">
+        <service id="pp_parallel_bridge.promise_wait" class="PP\ParallelBridge\PromiseWait" public="true">
             <argument type="service" id="pp_parallel_bridge.factory.pool_factory"/>
         </service>
         <service id="PP\ParallelBridge\ServiceCaller" alias="pp_parallel_bridge.service_caller" public="false" />
