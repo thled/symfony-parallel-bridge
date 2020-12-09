@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="PP\ParallelBridge\PromiseWait" alias="pp_parallel_bridge.promise_wait" public="false" />
+        <service id="pp_parallel_bridge.promise_wait" class="PP\ParallelBridge\PromiseWait" public="false">
+            <argument type="service" id="pp_parallel_bridge.factory.pool_factory"/>
+        </service>
+        <service id="PP\ParallelBridge\ServiceCaller" alias="pp_parallel_bridge.service_caller" public="false" />
+        <service id="pp_parallel_bridge.service_caller" class="PP\ParallelBridge\ServiceCaller" public="false" />
+        <service id="pp_parallel_bridge.factory.pool_factory" class="PP\ParallelBridge\Factory\PoolFactory" public="false" />
+    </services>
+</container>
