@@ -7,7 +7,6 @@ namespace PP\ParallelBridge\Tests;
 use PHPUnit\Framework\TestCase;
 use PP\ParallelBridge\Factory\PoolFactory;
 use PP\ParallelBridge\PromiseWait;
-use Amp\Parallel\Worker\Pool;
 
 final class PromiseWaitTest extends TestCase
 {
