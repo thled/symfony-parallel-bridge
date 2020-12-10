@@ -70,9 +70,7 @@ class YourClass {
         print_r($finalDataArray);
     }
  
-    /** 
-     * This Function will be called async from our processes 
-     */   
+    //This Function will be called async from our processes after grabbing this service from service container 
     public function processSingleElement(int $number): int {
         return $number ** $number;
     }
