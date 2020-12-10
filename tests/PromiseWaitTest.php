@@ -77,10 +77,22 @@ final class PromiseWaitTest extends TestCase
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
         $result = $subject->parallelMap($array, [TestClass::class, 'parent::getNumber']);
-//        $cool = call_user_func([TestClass::class, 'parent::getNumber'],0); // A
-//        dd($cool);
 
         $expectedResult = [5, 6, 7, 8, 9, 10, 11, 12, 13];
+        self::assertSame($result, $expectedResult);
+    }
+
+    /** @test */
+    public function invokedMethod(): void
+    {
+        $poolFactory = new PoolFactory(3, __DIR__);
+        $subject = new PromiseWait($poolFactory);
+
+        $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        $testClass = new TestClass();
+        $result = $subject->parallelMap($array, $testClass);
+
+        $expectedResult = [3, 4, 5, 6, 7, 8, 9, 10, 11];
         self::assertSame($result, $expectedResult);
     }
 

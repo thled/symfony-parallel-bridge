@@ -17,7 +17,7 @@ class ServiceCaller
     public static function processSingleElement(array $packedParamArray)
     {
         $elementToProcess = $packedParamArray['element'];
-        $callable = unserialize($packedParamArray['callable']);
+        $callable = unserialize($packedParamArray['callable'], [true]);
         $additionalParameters = $packedParamArray['additionalParameters'];
 
         if ($callable instanceof SerializableClosure) {
@@ -31,7 +31,8 @@ class ServiceCaller
             }
             $callable = [$service, $functionName];
         }
-        return call_user_func($callable, $elementToProcess, ...$additionalParameters); // A
+        /** @noinspection VariableFunctionsUsageInspection */
+        return call_user_func($callable, $elementToProcess, ...$additionalParameters);
     }
 
     private static function getContainer(): ContainerInterface
