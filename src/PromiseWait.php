@@ -26,15 +26,15 @@ class PromiseWait
      * @return array<mixed>
      * @throws MultiReasonException
      */
-    public function parallelMap(array $arrayToRemap, string $service, string $function, ...$additionalParameters): array
+    public function parallelMap(array $arrayToRemap, callable $callable, ...$additionalParameters): array
     {
-        $preparedMappedArray = $this->remapArray($arrayToRemap, $service, $function, $additionalParameters);
+        //$preparedMappedArray = $this->remapArray($arrayToRemap, $callable, $additionalParameters);
 
         /** @phpstan-ignore-next-line */
         return Promise\wait(
             parallelMap(
-                $preparedMappedArray,
-                [ServiceCaller::class, 'processSingleElement'],
+                $arrayToRemap,
+                $callable,
                 $this->poolFactory->create(),
             )
         );

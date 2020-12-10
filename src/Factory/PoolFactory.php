@@ -26,8 +26,12 @@ class PoolFactory
 
     public function create(): Pool
     {
-        $factory = new BootstrapWorkerFactory($this->projectDir . '/config/worker-bootstrap.php');
+        $workerBootStrapPath = $this->projectDir . '/config/worker-bootstrap.php';
 
-        return new DefaultPool($this->amphpMaxWorkers, $factory);
+        if(is_file($workerBootStrapPath)){
+            $factory = new BootstrapWorkerFactory($workerBootStrapPath);
+            return new DefaultPool($this->amphpMaxWorkers, $factory);
+        }
+        return new DefaultPool($this->amphpMaxWorkers);
     }
 }
