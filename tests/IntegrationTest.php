@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace KnpU\LoremIpsumBundle\Tests;
+namespace PP\ParallelBridge\Tests;
 
 use PHPUnit\Framework\TestCase;
 use PP\ParallelBridge\PPParallelBridge;
@@ -22,15 +22,3 @@ class FunctionalTest extends TestCase
     }
 }
 
-class ParallelBridgeTestingKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        return [
-            new PPParallelBridge(),
-        ];
-    }
-    public function registerContainerConfiguration(LoaderInterface $loader)
-    {
-    }
-}

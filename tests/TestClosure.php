@@ -12,4 +12,9 @@ class TestClosure
             return $input + 1;
         };
     }
+
+    public static function addOne(int $number): int
+    {
+        return $number + 1;
+    }
 }
