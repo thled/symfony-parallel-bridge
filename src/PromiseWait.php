@@ -8,6 +8,7 @@ use Amp\MultiReasonException;
 use Amp\Promise;
 use PP\ParallelBridge\Factory\PoolFactory;
 
+
 use function Amp\ParallelFunctions\parallelMap;
 
 class PromiseWait
@@ -28,13 +29,16 @@ class PromiseWait
      */
     public function parallelMap(array $arrayToRemap, callable $callable, ...$additionalParameters): array
     {
-        $preparedMappedArray = $this->remapArray($arrayToRemap, $callable, $additionalParameters);
+        if (is_array($callable) && is_object($callable[0])) {
+            $arrayToRemap = $this->remapArray($arrayToRemap, $callable, $additionalParameters);
+            $callable = [ServiceCaller::class, 'processSingleElement'];
+        }
 
         /** @phpstan-ignore-next-line */
         return Promise\wait(
             parallelMap(
-                $preparedMappedArray,
-                [ServiceCaller::class, 'processSingleElement'],
+                $arrayToRemap,
+                $callable,
                 $this->poolFactory->create(),
             )
         );

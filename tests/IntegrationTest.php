@@ -24,11 +24,6 @@ class IntegrationTest extends TestCase
 
     public function testServiceCallingAsync(): void
     {
-        $kernel = new ParallelBridgeTestingKernel('test', true);
-        $kernel->boot();
-        $container = $kernel->getContainer();
-        $promiseWait = $container->get('pp_parallel_bridge.promise_wait');
-
         /** @var PromiseWait */
         $testArray = [1, 2, 3, 4, 5, 6];
         $poolFactory = new PoolFactory(3, __DIR__);
