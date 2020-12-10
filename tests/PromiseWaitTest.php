@@ -6,6 +6,7 @@ namespace PP\ParallelBridge\Tests;
 
 use PHPUnit\Framework\TestCase;
 use PP\ParallelBridge\Factory\PoolFactory;
+use PP\ParallelBridge\Factory\TestPoolFactory;
 use PP\ParallelBridge\PromiseWait;
 
 final class PromiseWaitTest extends TestCase
@@ -13,7 +14,7 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function closure(): void
     {
-        $poolFactory = new PoolFactory(3, '/app');
+        $poolFactory = new PoolFactory(3, __DIR__);
         $subject = new PromiseWait($poolFactory);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -28,7 +29,7 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function classFunction(): void
     {
-        $poolFactory = new PoolFactory(3, '/app');
+        $poolFactory = new PoolFactory(3, __DIR__);
         $subject = new PromiseWait($poolFactory);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];

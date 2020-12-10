@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PP\ParallelBridge;
 
 use Psr\Container\ContainerInterface;
+use Opis\Closure\SerializableClosure;
 
 class ServiceCaller
 {
@@ -16,13 +17,19 @@ class ServiceCaller
     public static function processSingleElement(array $element)
     {
         $elementToProcess = $element['element'];
-        $callable = $element['callable'];
+        $callable = unserialize($element['callable']);
         $additionalParameters = $element['additionalParameters'];
 
-        [$service, $functionName] = $callable;
-        $serviceToCall = self::getContainer()->get($service);
-        if (is_object($serviceToCall)) {
-            return $serviceToCall->$functionName($elementToProcess, ...$additionalParameters);
+        if($callable instanceof SerializableClosure){
+            $callable = $callable->getClosure();
+        }
+
+        if(is_array($callable)){
+            [$service, $functionName] = $callable;
+            if(self::getContainer()->has($service)){
+                $serviceToCall = self::getContainer()->get($service);
+                return $serviceToCall->$functionName($elementToProcess, ...$additionalParameters);
+            }
         }
 
         return $callable($elementToProcess, ...$additionalParameters);
