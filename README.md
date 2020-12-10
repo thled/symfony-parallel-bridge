@@ -66,7 +66,7 @@ class YourClass {
     public function yourFunction(): void
     {
         $unprocessDataArray = [1,2,3,4,5,6,7,8];
-        $finalDataArray = $this->promiseWait->parallelMap($unprocessDataArray, YourClass::class, 'exportSingleNrwService');
+        $finalDataArray = $this->promiseWait->parallelMap($unprocessDataArray, YourClass::class, 'processSingleElement');
         print_r($finalDataArray);
     }
  
