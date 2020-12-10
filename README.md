@@ -40,6 +40,7 @@ $GLOBALS['kernel'] = $kernel;
 ```
 
 3.setup your max worker amount in your .env.local 2
+
 ```yaml
 AMPHP_MAX_WORKERS=3
 ```
@@ -66,7 +67,9 @@ class YourClass {
     public function yourFunction(): void
     {
         $unprocessDataArray = [1,2,3,4,5,6,7,8];
-        $finalDataArray = $this->promiseWait->parallelMap($unprocessDataArray, YourClass::class, 'processSingleElement');
+        
+        //If we want to use a container class it must be public and in the following format:
+        $finalDataArray = $this->promiseWait->parallelMap($unprocessDataArray, [$this,'processSingleElement']);
         print_r($finalDataArray);
     }
  
