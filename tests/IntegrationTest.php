@@ -33,7 +33,8 @@ class IntegrationTest extends TestCase
         $testArray = [1, 2, 3, 4, 5, 6];
         $poolFactory = new PoolFactory(3, __DIR__);
         $promiseWait = new PromiseWait($poolFactory);
-        $resultArray = $promiseWait->parallelMap($testArray, [TestService::class, 'addTwo']);
+        $objectToCall = new TestService();
+        $resultArray = $promiseWait->parallelMap($testArray, [$objectToCall, 'addTwo']);
         self::assertSame([3, 4, 5, 6, 7, 8], $resultArray);
     }
 }

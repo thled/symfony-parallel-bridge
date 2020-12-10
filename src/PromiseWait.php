@@ -28,26 +28,25 @@ class PromiseWait
      */
     public function parallelMap(array $arrayToRemap, callable $callable, ...$additionalParameters): array
     {
-        //$preparedMappedArray = $this->remapArray($arrayToRemap, $callable, $additionalParameters);
+        $preparedMappedArray = $this->remapArray($arrayToRemap, $callable, $additionalParameters);
 
         /** @phpstan-ignore-next-line */
         return Promise\wait(
             parallelMap(
-                $arrayToRemap,
-                $callable,
+                $preparedMappedArray,
+                [ServiceCaller::class, 'processSingleElement'],
                 $this->poolFactory->create(),
             )
         );
     }
 
-    private function remapArray(array $array, string $service, string $function, array $additionalParameters): array
+    private function remapArray(array $array, callable $callable, array $additionalParameters): array
     {
         $newArray = [];
         foreach ($array as $element) {
             $cool = [];
             $cool['element'] = $element;
-            $cool['service'] = $service;
-            $cool['function'] = $function;
+            $cool['callable'] = $callable;
             $cool['additionalParameters'] = $additionalParameters;
             $newArray[] = $cool;
         }

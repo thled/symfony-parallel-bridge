@@ -15,13 +15,22 @@ class ServiceCaller
      */
     public static function processSingleElement(array $element)
     {
-        $serviceName = $element['service'];
-        $functionName = $element['function'];
         $elementToProcess = $element['element'];
+        $callable = $element['callable'];
         $additionalParameters = $element['additionalParameters'];
-        $serviceToCall = self::getContainer()->get($serviceName);
 
-        return $serviceToCall->$functionName($elementToProcess, ...$additionalParameters);
+        if (is_array($callable)) {
+            $service = $callable[0];
+            $functionName = $callable[1];
+            if(is_object($service)){
+                $serviceToCall = self::getContainer()->get(get_class($service));
+                if (is_object($serviceToCall)) {
+                    return $serviceToCall->$functionName($elementToProcess, ...$additionalParameters);
+                }
+            }
+        }
+
+        return $callable($elementToProcess, ...$additionalParameters);
     }
 
     private static function getContainer(): ContainerInterface
