@@ -18,9 +18,10 @@ class ServiceCaller
         $serviceName = $element['service'];
         $functionName = $element['function'];
         $elementToProcess = $element['element'];
+        $additionalParameters = $element['additionalParameters'];
         $serviceToCall = self::getContainer()->get($serviceName);
 
-        return $serviceToCall->$functionName($elementToProcess);
+        return $serviceToCall->$functionName($elementToProcess, ...$additionalParameters);
     }
 
     private static function getContainer(): ContainerInterface

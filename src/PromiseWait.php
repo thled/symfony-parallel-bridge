@@ -22,28 +22,25 @@ class PromiseWait
 
     /**
      * @param array<mixed> $arrayToRemap
+     *
      * @return array<mixed>
+     * @throws MultiReasonException
      */
-    public function parallelMap(array $arrayToRemap, string $service, string $function): array
+    public function parallelMap(array $arrayToRemap, string $service, string $function, ...$additionalParameters): array
     {
-        $mappedArray = [];
-        $preparedMappedArray = $this->remapArray($arrayToRemap, $service, $function);
-        try {
-            /** @phpstan-ignore-next-line */
-            $mappedArray = Promise\wait(
-                parallelMap(
-                    $preparedMappedArray,
-                    [ServiceCaller::class, 'processSingleElement'],
-                    $this->poolFactory->create(),
-                )
-            );
-        } catch (MultiReasonException $e) {
-            dd($e->getReasons()); //todo:: dont die do something more useful
-        }
-        return $mappedArray;
+        $preparedMappedArray = $this->remapArray($arrayToRemap, $service, $function, $additionalParameters);
+
+        /** @phpstan-ignore-next-line */
+        return Promise\wait(
+            parallelMap(
+                $preparedMappedArray,
+                [ServiceCaller::class, 'processSingleElement'],
+                $this->poolFactory->create(),
+            )
+        );
     }
 
-    private function remapArray(array $array, string $service, string $function): array
+    private function remapArray(array $array, string $service, string $function, array $additionalParameters): array
     {
         $newArray = [];
         foreach ($array as $element) {
@@ -51,6 +48,7 @@ class PromiseWait
             $cool['element'] = $element;
             $cool['service'] = $service;
             $cool['function'] = $function;
+            $cool['additionalParameters'] = $additionalParameters;
             $newArray[] = $cool;
         }
         return $newArray;
