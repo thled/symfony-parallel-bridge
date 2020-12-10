@@ -14,25 +14,24 @@ class ServiceCaller
      *
      * @return mixed
      */
-    public static function processSingleElement(array $element)
+    public static function processSingleElement(array $packedParamArray)
     {
-        $elementToProcess = $element['element'];
-        $callable = unserialize($element['callable']);
-        $additionalParameters = $element['additionalParameters'];
+        $elementToProcess = $packedParamArray['element'];
+        $callable = unserialize($packedParamArray['callable']);
+        $additionalParameters = $packedParamArray['additionalParameters'];
 
-        if($callable instanceof SerializableClosure){
+        if ($callable instanceof SerializableClosure) {
             $callable = $callable->getClosure();
         }
 
-        if(is_array($callable)){
+        if (is_array($callable)) {
             [$service, $functionName] = $callable;
-            if(self::getContainer()->has($service)){
-                $serviceToCall = self::getContainer()->get($service);
-                return $serviceToCall->$functionName($elementToProcess, ...$additionalParameters);
+            if (self::getContainer()->has($service)) {
+                $service = self::getContainer()->get($service);
             }
+            $callable = [$service, $functionName];
         }
-
-        return $callable($elementToProcess, ...$additionalParameters);
+        return call_user_func($callable, $elementToProcess, ...$additionalParameters); // A
     }
 
     private static function getContainer(): ContainerInterface

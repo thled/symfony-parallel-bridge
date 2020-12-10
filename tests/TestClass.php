@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PP\ParallelBridge\Tests;
 
-class TestClosure
+class TestClass extends ParentTestClass
 {
     public static function getClosure(): \Closure
     {
@@ -16,5 +16,15 @@ class TestClosure
     public static function addOne(int $number): int
     {
         return $number + 1;
+    }
+
+    public static function getNumber(int $int): int
+    {
+        return $int + 10;
+    }
+
+    public function __invoke(int $number)
+    {
+        return $number + 3;
     }
 }
