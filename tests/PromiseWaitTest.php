@@ -27,7 +27,7 @@ final class PromiseWaitTest extends TestCase
     }
 
     /** @test */
-    public function classFunction(): void
+    public function staticMethod(): void
     {
         $poolFactory = new PoolFactory(3, __DIR__);
         $subject = new PromiseWait($poolFactory);
@@ -39,4 +39,33 @@ final class PromiseWaitTest extends TestCase
         $expectedResult = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         self::assertSame($result, $expectedResult);
     }
+
+    /** @test */
+    public function classSimpleString(): void
+    {
+        $poolFactory = new PoolFactory(3, __DIR__);
+        $subject = new PromiseWait($poolFactory);
+
+        $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+        $result = $subject->parallelMap($array, 'is_string');
+
+        $expectedResult = [false, false, false, false, false, false, false, false, false];
+        self::assertSame($result, $expectedResult);
+    }
+
+    /** @test */
+    public function staticMethodAsString(): void
+    {
+        $poolFactory = new PoolFactory(3, __DIR__);
+        $subject = new PromiseWait($poolFactory);
+
+        $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+        $result = $subject->parallelMap($array, TestClosure::class.'::addOne');
+
+        $expectedResult = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        self::assertSame($result, $expectedResult);
+    }
+
 }
