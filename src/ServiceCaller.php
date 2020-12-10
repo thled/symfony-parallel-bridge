@@ -20,7 +20,7 @@ class ServiceCaller
         $additionalParameters = $element['additionalParameters'];
 
         [$service, $functionName] = $callable;
-        $serviceToCall = self::getContainer()->get(get_class($service));
+        $serviceToCall = self::getContainer()->get($service);
         if (is_object($serviceToCall)) {
             return $serviceToCall->$functionName($elementToProcess, ...$additionalParameters);
         }

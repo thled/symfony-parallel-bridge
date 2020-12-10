@@ -30,7 +30,10 @@ class PromiseWait
     public function parallelMap(array $arrayToRemap, callable $callable, ...$additionalParameters): array
     {
         if (is_array($callable) && is_object($callable[0])) {
-            $arrayToRemap = $this->remapArray($arrayToRemap, $callable, $additionalParameters);
+            $class = get_class($callable[0]);
+            $function = $callable[1];
+
+            $arrayToRemap = $this->remapArray($arrayToRemap, [$class, $function], $additionalParameters);
             $callable = [ServiceCaller::class, 'processSingleElement'];
         }
 
@@ -48,11 +51,11 @@ class PromiseWait
     {
         $newArray = [];
         foreach ($array as $element) {
-            $cool = [];
-            $cool['element'] = $element;
-            $cool['callable'] = $callable;
-            $cool['additionalParameters'] = $additionalParameters;
-            $newArray[] = $cool;
+            $newArray[] = [
+                'element' => $element,
+                'callable' => $callable,
+                'additionalParameters' => $additionalParameters,
+            ];
         }
         return $newArray;
     }
