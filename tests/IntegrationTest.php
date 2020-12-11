@@ -16,7 +16,7 @@ class IntegrationTest extends TestCase
         $kernel->boot();
         $container = $kernel->getContainer();
         $promiseWait = $container->get('publicplan_parallel_bridge.promise_wait');
-        $this->assertInstanceOf(PromiseWait::class, $promiseWait);
+        self::assertInstanceOf(PromiseWait::class, $promiseWait);
     }
 
     public function testServiceCallingAsync(): void
