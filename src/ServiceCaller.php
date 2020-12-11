@@ -6,6 +6,7 @@ namespace Publicplan\ParallelBridge;
 
 use Psr\Container\ContainerInterface;
 use Opis\Closure\SerializableClosure;
+use TypeError;
 
 class ServiceCaller
 {
@@ -31,8 +32,14 @@ class ServiceCaller
             }
             $callable = [$service, $functionName];
         }
-        /** @noinspection VariableFunctionsUsageInspection */
-        return call_user_func($callable, $elementToProcess, ...$additionalParameters);
+        try {
+            /** @noinspection VariableFunctionsUsageInspection */
+            return call_user_func($callable, $elementToProcess, ...$additionalParameters);
+        } catch (TypeError $exception) {
+            $message = $exception->getMessage();
+            $message .= ' Maybe you have forgotten to make your service public?';
+            throw new TypeError($message, $exception->getCode(), $exception);
+        }
     }
 
     private static function getContainer(): ContainerInterface
