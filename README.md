@@ -38,14 +38,22 @@ $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $kernel->boot();
 $GLOBALS['kernel'] = $kernel;
 ```
+3. Create a _parallel_bridge.yaml_ in your config/packages dir
+```yaml
+#config/packages/parallel_bridge.yaml
+pp_parallel_bridge:
+  amphp_max_worker: '%env(int:AMPHP_MAX_WORKERS)%'
+  project_dir: '%kernel.project_dir%'
+```
 
-3.setup your max worker amount in your .env.local 2
+
+4.setup your max worker amount in your .env.local 2
 
 ```yaml
 AMPHP_MAX_WORKERS=3
 ```
 
-4.use PromiseWait in your class to remap async!
+5.use PromiseWait in your class to remap async!
 
 ```PHP
 <?php
