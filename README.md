@@ -20,23 +20,22 @@ composer require publicplan/parallel-bridge
 declare(strict_types=1);
 
 use App\Kernel;
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\Dotenv\Dotenv;
 
 set_time_limit(0);
 
-require dirname(__DIR__).'/config/bootstrap.php';
-
-if ($_SERVER['APP_DEBUG']) {
-umask(0000);
-
-    if (class_exists(Debug::class)) {
-        Debug::enable();
+if (class_exists(Dotenv::class)) {
+    if (method_exists(Dotenv::class, 'bootenv')) {
+        (new Dotenv())->bootEnv(dirname(__DIR__) . '/.env');
+    } else {
+        require dirname(__DIR__) . '/config/bootstrap.php';
     }
 }
 
-$kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+$kernel = new Kernel($_SERVER['APP_ENV'], (bool)$_SERVER['APP_DEBUG']);
 $kernel->boot();
 $GLOBALS['kernel'] = $kernel;
+
 ```
 3. Create a _parallel_bridge.yaml_ in your config/packages dir
 ```yaml
@@ -62,7 +61,7 @@ declare(strict_types=1);
 
 namespace App\Service\YourClass;
 
-use PP\ParallelBridge\PromiseWait;
+use Publicplan\ParallelBridge\PromiseWait;
 
 class YourClass {
     /** @var PromiseWait */

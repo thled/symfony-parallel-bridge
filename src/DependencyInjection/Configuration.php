@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge\DependencyInjection;
+namespace Publicplan\ParallelBridge\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('pp_parallel_bridge');
+        $treeBuilder = new TreeBuilder('publicplan_parallel_bridge');
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode->children()

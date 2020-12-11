@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge\Factory;
+namespace Publicplan\ParallelBridge\Factory;
 
 use Amp\Parallel\Worker\BootstrapWorkerFactory;
 use Amp\Parallel\Worker\DefaultPool;

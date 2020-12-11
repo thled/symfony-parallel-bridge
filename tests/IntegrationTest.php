@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge\Tests;
+namespace Publicplan\ParallelBridge\Tests;
 
 use PHPUnit\Framework\TestCase;
-use PP\ParallelBridge\Factory\PoolFactory;
-use PP\ParallelBridge\PPParallelBridge;
-use PP\ParallelBridge\PromiseWait;
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Kernel;
+use Publicplan\ParallelBridge\Factory\PoolFactory;
+use Publicplan\ParallelBridge\PromiseWait;
 
 class IntegrationTest extends TestCase
 {
@@ -18,7 +15,7 @@ class IntegrationTest extends TestCase
         $kernel = new ParallelBridgeTestingKernel('test', true);
         $kernel->boot();
         $container = $kernel->getContainer();
-        $promiseWait = $container->get('pp_parallel_bridge.promise_wait');
+        $promiseWait = $container->get('publicplan_parallel_bridge.promise_wait');
         $this->assertInstanceOf(PromiseWait::class, $promiseWait);
     }
 

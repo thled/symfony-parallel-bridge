@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PP\\ParallelBridge\\": "src/"
+            "Publicplan\\ParallelBridge\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PP\\ParallelBridge\\Tests\\": "tests/"
+            "Publicplan\\ParallelBridge\\Tests\\": "tests/"
         }
     }
 }

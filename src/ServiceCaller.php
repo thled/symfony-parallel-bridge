@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge;
+namespace Publicplan\ParallelBridge;
 
 use Psr\Container\ContainerInterface;
 use Opis\Closure\SerializableClosure;

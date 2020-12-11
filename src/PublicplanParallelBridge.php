@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge;
+namespace Publicplan\ParallelBridge;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PPParallelBridge extends Bundle
+class PublicplanParallelBridge extends Bundle
 {
 }

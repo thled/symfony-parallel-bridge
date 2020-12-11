@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge\Tests;
+namespace Publicplan\ParallelBridge\Tests;
 
 use PHPUnit\Framework\TestCase;
-use PP\ParallelBridge\Factory\PoolFactory;
-use PP\ParallelBridge\Factory\TestPoolFactory;
-use PP\ParallelBridge\PromiseWait;
+use Publicplan\ParallelBridge\Factory\PoolFactory;
+use Publicplan\ParallelBridge\PromiseWait;
 
 final class PromiseWaitTest extends TestCase
 {

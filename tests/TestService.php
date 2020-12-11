@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge\Tests;
+namespace Publicplan\ParallelBridge\Tests;
 
 use Serializable;
 

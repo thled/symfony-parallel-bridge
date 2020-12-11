@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PP\ParallelBridge;
+namespace Publicplan\ParallelBridge;
 
 use Amp\MultiReasonException;
 use Amp\Parallel\Sync\SerializationException;
 use Amp\Promise;
 use Opis\Closure\SerializableClosure;
-use PP\ParallelBridge\Factory\PoolFactory;
+use Publicplan\ParallelBridge\Factory\PoolFactory;
 
 use function Amp\ParallelFunctions\parallelMap;
 

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use PP\ParallelBridge\Tests\ParallelBridgeTestingKernel;
-use PP\ParallelBridge\Tests\TestService;
+use Publicplan\ParallelBridge\Tests\ParallelBridgeTestingKernel;
+use Publicplan\ParallelBridge\Tests\TestService;
 
 $kernel = new ParallelBridgeTestingKernel('test', true);
 $kernel->boot();

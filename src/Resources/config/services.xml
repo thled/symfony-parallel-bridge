@@ -5,12 +5,12 @@
         https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="PP\ParallelBridge\PromiseWait" alias="pp_parallel_bridge.promise_wait" public="false" />
-        <service id="pp_parallel_bridge.promise_wait" class="PP\ParallelBridge\PromiseWait" public="true">
-            <argument type="service" id="pp_parallel_bridge.factory.pool_factory"/>
+        <service id="Publicplan\ParallelBridge\PromiseWait" alias="publicplan_parallel_bridge.promise_wait" public="false" />
+        <service id="publicplan_parallel_bridge.promise_wait" class="Publicplan\ParallelBridge\PromiseWait" public="true">
+            <argument type="service" id="publicplan_parallel_bridge.factory.pool_factory"/>
         </service>
-        <service id="PP\ParallelBridge\ServiceCaller" alias="pp_parallel_bridge.service_caller" public="false" />
-        <service id="pp_parallel_bridge.service_caller" class="PP\ParallelBridge\ServiceCaller" public="false" />
-        <service id="pp_parallel_bridge.factory.pool_factory" class="PP\ParallelBridge\Factory\PoolFactory" public="false" />
+        <service id="Publicplan\ParallelBridge\ServiceCaller" alias="publicplan_parallel_bridge.service_caller" public="false" />
+        <service id="publicplan_parallel_bridge.service_caller" class="Publicplan\ParallelBridge\ServiceCaller" public="false" />
+        <service id="publicplan_parallel_bridge.factory.pool_factory" class="Publicplan\ParallelBridge\Factory\PoolFactory" public="false" />
     </services>
 </container>
