@@ -101,3 +101,12 @@ class YourClass
 }
 ```
 
+6. Make your service public!
+
+```yaml
+# config/services.yaml
+services:
+    [...]
+    App\Service\YourClass:
+        public: true
+```
