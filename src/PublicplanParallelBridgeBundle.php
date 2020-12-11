@@ -6,6 +6,6 @@ namespace Publicplan\ParallelBridge;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PublicplanParallelBridge extends Bundle
+class PublicplanParallelBridgeBundle extends Bundle
 {
 }
