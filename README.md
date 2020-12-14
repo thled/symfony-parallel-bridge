@@ -7,6 +7,8 @@ Parallel Bridge
 [![Pipeline][pipeline-badge]][pipeline]
 
 Provides utilities from AMPHP Parallel, especially parallel functions.
+This Bundle is developed and tested with php 7.3, 7.4 and 8.0 and Symfony 4.4 and 5.2. 
+Other Versions might work but are not supported or tested.
 
 ### SETUP
 
