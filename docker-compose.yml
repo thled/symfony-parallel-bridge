@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/app/Dockerfile
+        restart: unless-stopped
+        ports:
+            - "11111:11111"
+        user: 1000:1000
+        environment:
+            PHP_IDE_CONFIG: serverName=docker-server
+        volumes:
+            - "./:/usr/src/app"
+            - "./docker/app/php.ini:/usr/local/etc/php/php.ini:ro"
+            - "./docker/app/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro"
+            - "~/phpstan-pro:/usr/src/app/var/phpstan-fixer"

@@ -8,7 +8,7 @@ use Serializable;
 
 class TestNonPublicService implements Serializable
 {
-    public function serialize(): void
+    public function serialize(): ?string
     {
         throw new \LogicException('This is not a serializable Class :-)');
     }
