@@ -1,15 +1,12 @@
 parameters:
     bootstrapFiles:
-        - './bin/.phpunit/phpunit-8.5-0/vendor/autoload.php'
+        - './vendor/bin/.phpunit/phpunit-9.4-0/vendor/autoload.php'
         - './vendor/autoload.php'
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
     level: 7
     symfony:
-        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
-        console_application_loader: './build/phpstan/console-loader.php'
-    doctrine:
-            objectManagerLoader: './build/phpstan/doctrine-orm-bootstrap.php'
+        container_xml_path: './src/Resources/config/services.xml'
     excludes_analyse:
         - %currentWorkingDirectory%/src/Migrations/*
     ignoreErrors:
