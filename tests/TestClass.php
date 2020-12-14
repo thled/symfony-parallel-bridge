@@ -18,9 +18,9 @@ class TestClass extends ParentTestClass
         return $number + 1 + $arg1 + $arg2;
     }
 
-    public static function getNumber(int $int): int
+    public static function getNumber(int $int, int $arg1, int $arg2): int
     {
-        return $int + 10;
+        return $int + 10 + $arg1 + $arg2;
     }
 
     public function __invoke(int $number)
