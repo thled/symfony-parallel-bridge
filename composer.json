@@ -49,9 +49,9 @@
         "test": "@php vendor/bin/simple-phpunit",
         "ci": [
             "@bootstrap",
+            "@test",
             "@lint",
-            "@analyse",
-            "@test"
+            "@analyse"
         ],
         "ci-8": [
             "@test",
