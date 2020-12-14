@@ -1,0 +1,10 @@
+{
+    "require": {
+        "phpstan/phpstan": "^0.12.62",
+        "phpstan/phpstan-deprecation-rules": "^0.12.6",
+        "phpstan/phpstan-phpunit": "^0.12.17",
+        "phpstan/phpstan-strict-rules": "^0.12.7",
+        "phpstan/phpstan-symfony": "^0.12.12",
+        "phpstan/extension-installer": "^1.1"
+    }
+}
