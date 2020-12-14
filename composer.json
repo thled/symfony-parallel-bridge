@@ -54,8 +54,8 @@
             "@test"
         ],
         "ci-8": [
-            "@analyse",
-            "@test"
+            "@test",
+            "@analyse"
         ]
     }
 }
