@@ -17,9 +17,7 @@ jobs:
           php-version: '7.4'
 
       - name: Install Composer dependencies
-        working-directory: ./app
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
       - name: Run CI
-        working-directory: ./app
         run: composer run-script ci
