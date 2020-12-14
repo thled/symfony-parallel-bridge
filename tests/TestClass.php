@@ -23,8 +23,8 @@ class TestClass extends ParentTestClass
         return $int + 10 + $arg1 + $arg2;
     }
 
-    public function __invoke(int $number)
+    public function __invoke(int $number, int $arg1, int $arg2)
     {
-        return $number + 3;
+        return $number + 3 + $arg1 + $arg2;
     }
 }
