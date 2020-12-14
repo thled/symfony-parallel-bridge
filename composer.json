@@ -48,6 +48,7 @@
         "analyse": "@php tools/phpstan/vendor/bin/phpstan analyse src tests --configuration=config.neon",
         "test": "@php vendor/bin/simple-phpunit",
         "ci": [
+            "@bootstrap",
             "@lint",
             "@analyse",
             "@test"
