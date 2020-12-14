@@ -16,12 +16,12 @@ class IntegrationTest extends TestCase
         $kernel->boot();
         $container = $kernel->getContainer();
         $promiseWait = $container->get('publicplan_parallel_bridge.promise_wait');
+        /** @phpstan-ignore-next-line */
         self::assertInstanceOf(PromiseWait::class, $promiseWait);
     }
 
     public function testServiceCallingAsync(): void
     {
-        /** @var PromiseWait */
         $testArray = [1, 2, 3, 4, 5, 6];
         $poolFactory = new PoolFactory(3, __DIR__);
         $promiseWait = new PromiseWait($poolFactory);

@@ -24,6 +24,7 @@ class PromiseWait
 
     /**
      * @param array<mixed> $arrayToRemap
+     * @param mixed $args
      *
      * @throws MultiReasonException
      *
@@ -50,6 +51,7 @@ class PromiseWait
         $arrayToRemap = $this->remapArray($arrayToRemap, $callable, $args);
         $callable = [ServiceCaller::class, 'processSingleElement'];
 
+        /** @phpstan-ignore-next-line */
         return Promise\wait(
             parallelMap(
                 $arrayToRemap,
@@ -59,6 +61,12 @@ class PromiseWait
         );
     }
 
+    /**
+     * @param array<mixed> $array
+     * @param array<mixed> $additionalParameters
+     *
+     * @return array<mixed>
+     */
     private function remapArray(array $array, string $serializedCallable, array $additionalParameters): array
     {
         $newArray = [];

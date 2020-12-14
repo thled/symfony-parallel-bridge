@@ -13,6 +13,7 @@ class TestNonPublicService implements Serializable
         throw new \LogicException('This is not a serializable Class :-)');
     }
 
+    /** @phpstan-ignore-next-line */
     public function unserialize($serialized): void
     {
         throw new \LogicException('This is not a serializable Class :-)');

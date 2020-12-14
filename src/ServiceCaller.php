@@ -11,7 +11,7 @@ use TypeError;
 class ServiceCaller
 {
     /**
-     * @param array{"service": string,"function":string, "element": mixed} $mappedNrwService
+     * @param array{"element": mixed, "callable": string, "additionalParameters": array<mixed>} $packedParamArray
      *
      * @return mixed
      */
@@ -27,7 +27,7 @@ class ServiceCaller
 
         if (\is_array($callable)) {
             [$service, $functionName] = $callable;
-            if (self::getContainer()->has($service)) {
+            if (\is_string($service) && self::getContainer()->has($service)) {
                 $service = self::getContainer()->get($service);
             }
             $callable = [$service, $functionName];

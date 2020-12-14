@@ -88,7 +88,9 @@ final class PromiseWaitTest extends TestCase
 
         $arg2 = 1;
 
-        $result = $subject->parallelMap($array, [TestClass::class, 'parent::getNumber'], $arg1, $arg2);
+        /** @var callable $callable */
+        $callable = [TestClass::class, 'parent::getNumber'];
+        $result = $subject->parallelMap($array, $callable, $arg1, $arg2);
 
         $expectedResult = [7, 8, 9, 10, 11, 12, 13, 14, 15];
         self::assertSame($result, $expectedResult);
