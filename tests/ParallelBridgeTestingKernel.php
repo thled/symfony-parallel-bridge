@@ -16,7 +16,7 @@ class ParallelBridgeTestingKernel extends Kernel
             new PublicplanParallelBridgeBundle(),
         ];
     }
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
     }
 }

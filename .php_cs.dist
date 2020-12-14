@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__)
+    ->exclude(['var', 'public/vendors', 'vendor']);
+
+return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@PSR2' => true,
+        'braces' => ['allow_single_line_closure'=>true],
+        'method_argument_space' => ['on_multiline'=>'ensure_fully_multiline'],
+        'blank_line_after_opening_tag' => true,
+        'compact_nullable_typehint' => true,
+        'concat_space' => ['spacing'=>'one'],
+        'declare_equal_normalize' => ['space'=>'none'],
+        'function_typehint_space' => true,
+        'new_with_braces' => true,
+        'no_empty_statement' => true,
+        'no_leading_import_slash' => true,
+        'no_leading_namespace_whitespace' => true,
+        'no_whitespace_in_blank_line' => true,
+        'return_type_declaration' => ['space_before'=>'none'],
+        'single_trait_insert_per_statement' => true,
+        'declare_strict_types' => true,
+        'single_quote' => true,
+        'void_return' => true,
+        'array_syntax' => ['syntax'=>'short'],
+        'fully_qualified_strict_types' => true,
+        'phpdoc_scalar' => true,
+        'phpdoc_line_span' => ['const'=>'single','method'=>'single','property'=>'single'],
+        'native_function_invocation' => true,
+        'binary_operator_spaces' => ['align_double_arrow'=>false],
+        'no_trailing_comma_in_singleline_array' => true,
+        'trailing_comma_in_multiline_array' => true,
+        'no_superfluous_phpdoc_tags' => ['allow_mixed'=>true,'remove_inheritdoc'=>true],
+        'no_empty_phpdoc' => true,
+        'phpdoc_order' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'no_unused_imports' => true,
+        'ordered_imports' => true,
+        'no_superfluous_elseif' => true,
+        'no_short_bool_cast' => true,
+        'phpdoc_trim_consecutive_blank_line_separation' => true,
+        'phpdoc_trim' => true,
+        'simplified_null_return' => true,
+        'phpdoc_separation' => true,
+        'no_unneeded_curly_braces' => true,
+        'no_unset_cast' => true,
+        'no_unneeded_control_parentheses' => true,
+        'no_short_echo_tag' => true,
+        'no_mixed_echo_print' => true,
+        'no_blank_lines_after_class_opening' => true,
+        'no_blank_lines_after_phpdoc' => true,
+        'native_function_casing' => true,
+        'include' => true,
+        'explicit_indirect_variable' => true,
+        'combine_consecutive_unsets' => true,
+        'cast_spaces' => true,
+        'array_indentation' => true,
+        'align_multiline_comment' => true,
+    ])
+    ->setFinder($finder);

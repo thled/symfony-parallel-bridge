@@ -28,7 +28,7 @@ class PoolFactory
     {
         $workerBootStrapPath = $this->projectDir . '/config/worker-bootstrap.php';
 
-        if(is_file($workerBootStrapPath)){
+        if (\is_file($workerBootStrapPath)) {
             $factory = new BootstrapWorkerFactory($workerBootStrapPath);
             return new DefaultPool($this->amphpMaxWorkers, $factory);
         }

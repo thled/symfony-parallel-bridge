@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Publicplan\ParallelBridge;
 
-use Psr\Container\ContainerInterface;
 use Opis\Closure\SerializableClosure;
+use Psr\Container\ContainerInterface;
 use TypeError;
 
 class ServiceCaller
@@ -18,14 +18,14 @@ class ServiceCaller
     public static function processSingleElement(array $packedParamArray)
     {
         $elementToProcess = $packedParamArray['element'];
-        $callable = unserialize($packedParamArray['callable'], [true]);
+        $callable = \unserialize($packedParamArray['callable'], [true]);
         $additionalParameters = $packedParamArray['additionalParameters'];
 
         if ($callable instanceof SerializableClosure) {
             $callable = $callable->getClosure();
         }
 
-        if (is_array($callable)) {
+        if (\is_array($callable)) {
             [$service, $functionName] = $callable;
             if (self::getContainer()->has($service)) {
                 $service = self::getContainer()->get($service);
@@ -34,7 +34,7 @@ class ServiceCaller
         }
         try {
             /** @noinspection VariableFunctionsUsageInspection */
-            return call_user_func($callable, $elementToProcess, ...$additionalParameters);
+            return \call_user_func($callable, $elementToProcess, ...$additionalParameters);
         } catch (TypeError $exception) {
             $message = $exception->getMessage();
             $message .= ' Maybe you have forgotten to make your service public?';

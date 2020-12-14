@@ -6,11 +6,11 @@ namespace Publicplan\ParallelBridge;
 
 use Amp\MultiReasonException;
 use Amp\Parallel\Sync\SerializationException;
+use function Amp\ParallelFunctions\parallelMap;
 use Amp\Promise;
 use Opis\Closure\SerializableClosure;
-use Publicplan\ParallelBridge\Factory\PoolFactory;
 
-use function Amp\ParallelFunctions\parallelMap;
+use Publicplan\ParallelBridge\Factory\PoolFactory;
 
 class PromiseWait
 {
@@ -25,13 +25,14 @@ class PromiseWait
     /**
      * @param array<mixed> $arrayToRemap
      *
-     * @return array<mixed>
      * @throws MultiReasonException
+     *
+     * @return array<mixed>
      */
     public function parallelMap(array $arrayToRemap, callable $callable, ...$args): array
     {
-        if (is_array($callable) && is_object($callable[0])) {
-            $class = get_class($callable[0]);
+        if (\is_array($callable) && \is_object($callable[0])) {
+            $class = \get_class($callable[0]);
             $function = $callable[1];
             $callable = [$class, $function];
         }
@@ -43,7 +44,7 @@ class PromiseWait
         try {
             $callable = \serialize($callable);
         } catch (\Throwable $e) {
-            throw new SerializationException("Unsupported callable: " . $e->getMessage(), 0, $e);
+            throw new SerializationException('Unsupported callable: ' . $e->getMessage(), 0, $e);
         }
 
         $arrayToRemap = $this->remapArray($arrayToRemap, $callable, $args);
@@ -71,5 +72,4 @@ class PromiseWait
         }
         return $newArray;
     }
-
 }
