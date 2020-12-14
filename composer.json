@@ -53,9 +53,16 @@
             "@lint",
             "@analyse"
         ],
-        "ci-8": [
+        "ci-8.0": [
+            "@bootstrap",
             "@test",
             "@analyse"
+        ],
+        "ci-7.4": [
+            "@ci"
+        ],
+        "ci-7.3": [
+            "@ci"
         ]
     }
 }
