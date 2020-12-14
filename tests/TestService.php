@@ -8,11 +8,12 @@ use Serializable;
 
 class TestService implements Serializable
 {
-    public function serialize(): void
+    public function serialize(): ?string
     {
         throw new \LogicException('This is not a serializable Class :-)');
     }
 
+    /** @param string $serialized */
     public function unserialize($serialized): void
     {
         throw new \LogicException('This is not a serializable Class :-)');

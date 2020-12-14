@@ -50,7 +50,6 @@ class PromiseWait
         $arrayToRemap = $this->remapArray($arrayToRemap, $callable, $args);
         $callable = [ServiceCaller::class, 'processSingleElement'];
 
-        /** @phpstan-ignore-next-line */
         return Promise\wait(
             parallelMap(
                 $arrayToRemap,
