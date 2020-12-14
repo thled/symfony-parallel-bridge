@@ -59,7 +59,9 @@ publicplan_parallel_bridge:
 AMPHP_MAX_WORKERS=3
 ```
 
-5. Use PromiseWait in your class to remap async! 
+### Usage
+
+1. Use PromiseWait in your class to remap async! 
    You can use any callable u like but you should consider that closures must be serializable. 
    When you need your projects context we recommend to use the following way:
    (also see https://amphp.org/parallel-functions/ for deeper informations) 
@@ -111,7 +113,7 @@ class YourClass
 }
 ```
 
-6. Make your service public!
+2. Make your service public!
 When using a service, like we do in the example above, you need to make your service public. 
 
 ```yaml
@@ -120,6 +122,51 @@ services:
     [...]
     App\Service\YourClass:
         public: true
+```
+
+#### Optional: Additional Arguments
+
+Add additional arguments to the `PromiseWait::parallelMap()` function as you like.
+All arguments get passed through to your called function.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service;
+
+use Publicplan\ParallelBridge\PromiseWait;
+
+class YourClass
+{
+    /** @var PromiseWait */
+    private $promiseWait;
+
+    public function __construct(PromiseWait $promiseWait)
+    {
+        $this->promiseWait = $promiseWait;
+    }
+    
+    public function yourFunction(): void
+    {
+        $unprocessDataArray = range(1, 100);
+        $additionalArg = 42;
+
+        $result = $this->promiseWait->parallelMap(
+           $unprocessDataArray, 
+           [$this,'processSingleElement'],
+           $additionalArg,
+        );
+        
+        print_r($result);
+    }
+
+    public function processSingleElement(int $number, int $additionalArg): int
+    {
+        return $number + $additionalArg;
+    }
+}
 ```
 
 [version-badge]: https://img.shields.io/badge/version-1.0.0-blue.svg
