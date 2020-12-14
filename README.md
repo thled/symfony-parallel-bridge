@@ -1,17 +1,22 @@
 Parallel Bridge
 ==============
 
+[![Version][version-badge]][changelog]
+[![MIT License][license-badge]][license]
+[![Symfony][symfony-badge]][symfony]
+[![Pipeline][pipeline-badge]][pipeline]
+
 Provides utilities from AMPHP Parallel, especially parallel functions.
 
 ### SETUP
 
-1. use composer to install parallel Bridge
+1. Use composer to install parallel Bridge.
 
 ```bash
 composer require publicplan/parallel-bridge
 ```
 
-2. create a _worker-bootstrap.php_ in your application config folder.
+2. Create a _worker-bootstrap.php_ in your application config folder.
 
 ```PHP
 // app/config/worker-bootstrap.php
@@ -46,13 +51,16 @@ publicplan_parallel_bridge:
 ```
 
 
-4.setup your max worker amount in your .env.local 2
+4. Setup your max worker amount in your _.env.local_.
 
 ```yaml
 AMPHP_MAX_WORKERS=3
 ```
 
-5.use PromiseWait in your class to remap async!
+5. Use PromiseWait in your class to remap async! 
+   You can use any callable u like but you should consider that closures must be serializable. 
+   When you need your projects context we recommend to use the following way:
+   (also see https://amphp.org/parallel-functions/ for deeper informations) 
 
 ```PHP
 //src/Service/YourClass.php
@@ -102,6 +110,7 @@ class YourClass
 ```
 
 6. Make your service public!
+When using a service, like we do in the example above, you need to make your service public. 
 
 ```yaml
 # config/services.yaml
@@ -110,3 +119,12 @@ services:
     App\Service\YourClass:
         public: true
 ```
+
+[version-badge]: https://img.shields.io/badge/version-1.0.0-blue.svg
+[changelog]: ./CHANGELOG.md
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ./LICENSE
+[symfony-badge]: https://img.shields.io/badge/Symfony-5.2-blue.svg
+[symfony]: https://symfony.com/releases/5.2
+[pipeline-badge]: https://github.com/thled/symfony-parallel-bridge/workflows/ci-pipeline/badge.svg?branch=master
+[pipeline]: https://github.com/thled/symfony-parallel-bridge/actions?query=workflow%3A%22ci-pipeline%22+branch%3Amaster
