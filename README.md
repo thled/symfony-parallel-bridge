@@ -1,5 +1,4 @@
-Parallel Bridge
-==============
+# Parallel Bridge
 
 [![Version][version-badge]][changelog]
 [![MIT License][license-badge]][license]
@@ -10,15 +9,15 @@ Provides utilities from AMPHP Parallel, especially parallel functions.
 This Bundle is developed and tested with php 7.3, 7.4 and 8.0 and Symfony 4.4 and 5.2. 
 Other Versions might work but are not supported or tested.
 
-### SETUP
+## SETUP
 
-1. Use composer to install parallel Bridge.
+1. Use composer to install Parallel-Bridge.
 
 ```bash
 composer require publicplan/parallel-bridge
 ```
 
-2. Create a _worker-bootstrap.php_ in your application config folder.
+1. Create `worker-bootstrap.php` in your application config folder.
 
 ```PHP
 // app/config/worker-bootstrap.php
@@ -44,30 +43,31 @@ $kernel->boot();
 $GLOBALS['kernel'] = $kernel;
 
 ```
-3. Create a _parallel_bridge.yaml_ in your config/packages dir
+
+1. Create `parallel_bridge.yaml` in your `config/packages` dir.
+
 ```yaml
-#config/packages/parallel_bridge.yaml
+# config/packages/parallel_bridge.yaml
 publicplan_parallel_bridge:
   amphp_max_worker: '%env(int:AMPHP_MAX_WORKERS)%'
   project_dir: '%kernel.project_dir%'
 ```
 
+1. Setup your maximal worker amount in your `.env.local`.
 
-4. Setup your max worker amount in your _.env.local_.
-
-```yaml
+```bash
 AMPHP_MAX_WORKERS=3
 ```
 
-### Usage
+## Usage
 
-1. Use PromiseWait in your class to remap async! 
-   You can use any callable u like but you should consider that closures must be serializable. 
+1. Use PromiseWait in your class to remap async!
+   You can use any callable you like but you should consider that closures must be serializable.
    When you need your projects context we recommend to use the following way:
-   (also see https://amphp.org/parallel-functions/ for deeper informations) 
+   (also see <https://amphp.org/parallel-functions/> for deeper information)
 
 ```PHP
-//src/Service/YourClass.php
+// src/Service/YourClass.php
 <?php
 
 declare(strict_types=1);
@@ -75,14 +75,14 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Amp\MultiReasonException;
-use Publicplan\ParallelBridge\PromiseWait;
+use Publicplan\ParallelBridge\PromiseWaitInterface;
 
 class YourClass
 {
-    /** @var PromiseWait */
+    /** @var PromiseWaitInterface */
     private $promiseWait;
 
-    public function __construct(PromiseWait $promiseWait)
+    public function __construct(PromiseWaitInterface $promiseWait)
     {
         $this->promiseWait = $promiseWait;
     }
@@ -113,8 +113,8 @@ class YourClass
 }
 ```
 
-2. Make your service public!
-When using a service, like we do in the example above, you need to make your service public. 
+1. Make your service public!
+When using a service, like we do in the example above, you need to make your service public.
 
 ```yaml
 # config/services.yaml
@@ -124,7 +124,7 @@ services:
         public: true
 ```
 
-#### Optional: Additional Arguments
+### Optional: Additional Arguments
 
 Add additional arguments to the `PromiseWait::parallelMap()` function as you like.
 All arguments get passed through to your called function.
@@ -136,14 +136,14 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use Publicplan\ParallelBridge\PromiseWait;
+use Publicplan\ParallelBridge\PromiseWaitInterface;
 
 class YourClass
 {
-    /** @var PromiseWait */
+    /** @var PromiseWaitInterface */
     private $promiseWait;
 
-    public function __construct(PromiseWait $promiseWait)
+    public function __construct(PromiseWaitInterface $promiseWait)
     {
         $this->promiseWait = $promiseWait;
     }
@@ -170,7 +170,7 @@ class YourClass
 }
 ```
 
-[version-badge]: https://img.shields.io/badge/version-1.0.0-blue.svg
+[version-badge]: https://img.shields.io/badge/version-1.0.2-blue.svg
 [changelog]: ./CHANGELOG.md
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license]: ./LICENSE

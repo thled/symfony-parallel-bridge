@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2020-12-30
+
+### Changed
+
+- Readme recommends usage of the interface.
+
+### Fixed
+
+- Autowiring for newly introduced `Publicplan\ParallelBridge\PromiseWaitInterface`.
+
 ## [1.0.1] - 2020-12-30
 
 ### Added
@@ -24,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - code style fixed with php-cs-fixer
 - support for php 7.3, 7.4, 8.0 and Symfony 4.4, 5.2
 
-[unreleased]: https://github.com/thled/thled_bugtracker/compare/v1.0.1...HEAD
+[unreleased]: https://github.com/thled/thled_bugtracker/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/thled/thled_bugtracker/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/thled/thled_bugtracker/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/thled/thled_bugtracker/releases/tag/v1.0.0

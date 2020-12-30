@@ -5,6 +5,7 @@
         https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="Publicplan\ParallelBridge\PromiseWaitInterface" alias="publicplan_parallel_bridge.promise_wait" public="false" />
         <service id="Publicplan\ParallelBridge\PromiseWait" alias="publicplan_parallel_bridge.promise_wait" public="false" />
         <service id="publicplan_parallel_bridge.promise_wait" class="Publicplan\ParallelBridge\PromiseWait" public="true">
             <argument type="service" id="publicplan_parallel_bridge.factory.pool_factory"/>
