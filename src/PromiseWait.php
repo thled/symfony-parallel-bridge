@@ -12,7 +12,7 @@ use Opis\Closure\SerializableClosure;
 
 use Publicplan\ParallelBridge\Factory\PoolFactory;
 
-class PromiseWait
+class PromiseWait implements PromiseWaitInterface
 {
     /** @var PoolFactory */
     private $poolFactory;
