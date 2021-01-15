@@ -57,6 +57,14 @@ class PromiseWait implements PromiseWaitInterface
         $arrayToRemap = $this->remapArray($arrayToRemap, $callable, $args);
         $callable = [ServiceCaller::class, 'processSingleElement'];
 
+        if($this->amphpMaxWorkers === 0){
+            $resultArray = [];
+            foreach ($arrayToRemap as $key => $value) {
+                $resultArray[$key] = $callable($value, ...$args);
+            }
+
+            return $resultArray;
+        }
         /** @phpstan-ignore-next-line */
         return Promise\wait(
             parallelMap(
