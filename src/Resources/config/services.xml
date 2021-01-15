@@ -4,11 +4,15 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services
         https://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="amphp.max.workers">%env(int:AMPHP_MAX_WORKERS)%</parameter>
+    </parameters>
     <services>
         <service id="Publicplan\ParallelBridge\PromiseWaitInterface" alias="publicplan_parallel_bridge.promise_wait" public="false" />
         <service id="Publicplan\ParallelBridge\PromiseWait" alias="publicplan_parallel_bridge.promise_wait" public="false" />
         <service id="publicplan_parallel_bridge.promise_wait" class="Publicplan\ParallelBridge\PromiseWait" public="true">
             <argument type="service" id="publicplan_parallel_bridge.factory.pool_factory"/>
+            <bind key="$amphpMaxWorkers">%amphp.max.workers%</bind>
         </service>
         <service id="Publicplan\ParallelBridge\ServiceCaller" alias="publicplan_parallel_bridge.service_caller" public="false" />
         <service id="publicplan_parallel_bridge.service_caller" class="Publicplan\ParallelBridge\ServiceCaller" public="false" />

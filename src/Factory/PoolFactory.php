@@ -10,28 +10,23 @@ use Amp\Parallel\Worker\Pool;
 
 class PoolFactory
 {
-    /** @var int */
-    private $amphpMaxWorkers;
-
     /** @var string */
     private $projectDir;
 
     public function __construct(
-        int $amphpMaxWorkers,
         string $projectDir
     ) {
-        $this->amphpMaxWorkers = $amphpMaxWorkers;
         $this->projectDir = $projectDir;
     }
 
-    public function create(): Pool
+    public function create(int $amphpMaxWorkers): Pool
     {
         $workerBootStrapPath = $this->projectDir . '/config/worker-bootstrap.php';
 
         if (\is_file($workerBootStrapPath)) {
             $factory = new BootstrapWorkerFactory($workerBootStrapPath);
-            return new DefaultPool($this->amphpMaxWorkers, $factory);
+            return new DefaultPool($amphpMaxWorkers, $factory);
         }
-        return new DefaultPool($this->amphpMaxWorkers);
+        return new DefaultPool($amphpMaxWorkers);
     }
 }

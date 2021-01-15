@@ -23,8 +23,8 @@ class IntegrationTest extends TestCase
     public function testServiceCallingAsync(): void
     {
         $testArray = [1, 2, 3, 4, 5, 6];
-        $poolFactory = new PoolFactory(3, __DIR__);
-        $promiseWait = new PromiseWait($poolFactory);
+        $poolFactory = new PoolFactory(__DIR__);
+        $promiseWait = new PromiseWait($poolFactory, 3);
         $objectToCall = new TestService();
         $resultArray = $promiseWait->parallelMap($testArray, [$objectToCall, 'addTwo']);
         self::assertSame([3, 4, 5, 6, 7, 8], $resultArray);

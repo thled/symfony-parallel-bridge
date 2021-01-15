@@ -13,8 +13,8 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function closure(): void
     {
-        $poolFactory = new PoolFactory(3, __DIR__);
-        $subject = new PromiseWait($poolFactory);
+        $poolFactory = new PoolFactory(__DIR__);
+        $subject = new PromiseWait($poolFactory,3);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         $closure = TestClass::getClosure();
@@ -31,8 +31,8 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function staticMethod(): void
     {
-        $poolFactory = new PoolFactory(3, __DIR__);
-        $subject = new PromiseWait($poolFactory);
+        $poolFactory = new PoolFactory(__DIR__);
+        $subject = new PromiseWait($poolFactory, 3);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -48,8 +48,8 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function classSimpleString(): void
     {
-        $poolFactory = new PoolFactory(3, __DIR__);
-        $subject = new PromiseWait($poolFactory);
+        $poolFactory = new PoolFactory(__DIR__);
+        $subject = new PromiseWait($poolFactory, 3);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -62,8 +62,8 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function staticMethodAsString(): void
     {
-        $poolFactory = new PoolFactory(3, __DIR__);
-        $subject = new PromiseWait($poolFactory);
+        $poolFactory = new PoolFactory(__DIR__);
+        $subject = new PromiseWait($poolFactory, 3);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -79,8 +79,8 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function relativeStaticMethod(): void
     {
-        $poolFactory = new PoolFactory(3, __DIR__);
-        $subject = new PromiseWait($poolFactory);
+        $poolFactory = new PoolFactory(__DIR__);
+        $subject = new PromiseWait($poolFactory, 3);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -99,8 +99,8 @@ final class PromiseWaitTest extends TestCase
     /** @test */
     public function invokedMethod(): void
     {
-        $poolFactory = new PoolFactory(3, __DIR__);
-        $subject = new PromiseWait($poolFactory);
+        $poolFactory = new PoolFactory(__DIR__);
+        $subject = new PromiseWait($poolFactory, 3);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         $testClass = new TestClass();

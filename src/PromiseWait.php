@@ -17,9 +17,15 @@ class PromiseWait implements PromiseWaitInterface
     /** @var PoolFactory */
     private $poolFactory;
 
-    public function __construct(PoolFactory $poolFactory)
-    {
+    /** @var int */
+    private $amphpMaxWorkers;
+
+    public function __construct(
+        PoolFactory $poolFactory,
+        int $amphpMaxWorkers
+    ) {
         $this->poolFactory = $poolFactory;
+        $this->amphpMaxWorkers = $amphpMaxWorkers;
     }
 
     /**
@@ -56,7 +62,7 @@ class PromiseWait implements PromiseWaitInterface
             parallelMap(
                 $arrayToRemap,
                 $callable,
-                $this->poolFactory->create(),
+                $this->poolFactory->create($this->amphpMaxWorkers),
             )
         );
     }
