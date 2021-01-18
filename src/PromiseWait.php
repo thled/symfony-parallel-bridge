@@ -108,7 +108,7 @@ class PromiseWait implements PromiseWaitInterface
     {
         if (\is_array($callable) && \is_object($callable[0])) {
             $class = \get_class($callable[0]);
-            $function = (string)$callable[1];
+            $function = (string) $callable[1];
             $callable = [$class, $function];
         }
         return $callable;
