@@ -6,11 +6,11 @@ namespace Publicplan\ParallelBridge;
 
 use Amp\MultiReasonException;
 use Amp\Parallel\Sync\SerializationException;
+use function Amp\ParallelFunctions\parallelMap;
 use Amp\Promise;
 use Opis\Closure\SerializableClosure;
-use Publicplan\ParallelBridge\Factory\PoolFactory;
 
-use function Amp\ParallelFunctions\parallelMap;
+use Publicplan\ParallelBridge\Factory\PoolFactory;
 
 class PromiseWait implements PromiseWaitInterface
 {
@@ -32,9 +32,9 @@ class PromiseWait implements PromiseWaitInterface
      * @param array<mixed> $arrayToRemap
      * @param mixed $args
      *
-     * @return array<mixed>
      * @throws MultiReasonException
      *
+     * @return array<mixed>
      */
     public function parallelMap(array $arrayToRemap, callable $callable, ...$args): array
     {
@@ -67,7 +67,7 @@ class PromiseWait implements PromiseWaitInterface
      * @param array<mixed> $array
      * @param array<mixed> $additionalParameters
      *
-     * @return array<mixed>
+     * @return array<int, array<string, mixed>>
      */
     private function packParametersToArray(array $array, string $serializedCallable, array $additionalParameters): array
     {
@@ -79,16 +79,16 @@ class PromiseWait implements PromiseWaitInterface
                 'additionalParameters' => $additionalParameters,
             ];
         }
+
         return $newArray;
     }
 
     /**
-     * @param array<mixed> $packedArray
-     * @param array<int, string> $processSingleElement
+     * @param array<int, array<string, mixed>> $packedArray
      *
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
-    private function remapSync(array $packedArray, array $processSingleElement): array
+    private function remapSync(array $packedArray, callable $processSingleElement): array
     {
         $resultArray = [];
         foreach ($packedArray as $key => $value) {
@@ -100,11 +100,10 @@ class PromiseWait implements PromiseWaitInterface
 
     /**
      * @param array<mixed> $packedArray
-     * @param array<int, string> $processSingleElement
      *
      * @return array<mixed>
      */
-    private function remapAsync(array $packedArray, array $processSingleElement): array
+    private function remapAsync(array $packedArray, callable $processSingleElement): array
     {
         return Promise\wait(
             parallelMap(

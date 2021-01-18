@@ -14,7 +14,7 @@ final class PromiseWaitTest extends TestCase
     public function closure(): void
     {
         $poolFactory = new PoolFactory(__DIR__);
-        $subject = new PromiseWait($poolFactory,3);
+        $subject = new PromiseWait($poolFactory, 3);
 
         $array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         $closure = TestClass::getClosure();

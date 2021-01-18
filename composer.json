@@ -45,7 +45,7 @@
         ],
         "fix": "@php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --allow-risky=yes",
         "lint": "@php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv --dry-run --stop-on-violation --using-cache=no --allow-risky=yes",
-        "analyse": "@php tools/phpstan/vendor/bin/phpstan analyse src tests --configuration=config.neon",
+        "analyse": "@php tools/phpstan/vendor/bin/phpstan analyse src tests --configuration=phpstan.neon",
         "test": "@php vendor/bin/simple-phpunit",
         "ci": [
             "@bootstrap",
