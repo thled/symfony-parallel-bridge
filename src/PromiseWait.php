@@ -15,7 +15,8 @@ use Publicplan\ParallelBridge\Model\PackedArguments;
 
 class PromiseWait implements PromiseWaitInterface
 {
-    private const CALLABLE = [ServiceCaller::class, 'processSingleElement'];
+    private const PROCESS_SINGLE_ELEMENT = [ServiceCaller::class, 'processSingleElement'];
+
     /** @var PoolFactory */
     private $poolFactory;
 
@@ -34,6 +35,7 @@ class PromiseWait implements PromiseWaitInterface
      * @param array<mixed> $arrayToRemap
      * @param mixed $args
      *
+     * @throws SerializationException
      * @throws MultiReasonException
      *
      * @return array<mixed, mixed>
@@ -41,29 +43,10 @@ class PromiseWait implements PromiseWaitInterface
     public function parallelMap(array $arrayToRemap, callable $callable, ...$args): array
     {
         if ($this->amphpMaxWorkers === 0) {
-            return $this->remapSync($arrayToRemap, $callable, $args);
+            return $this->syncMap($arrayToRemap, $callable, $args);
         }
 
-        if (\is_array($callable) && \is_object($callable[0])) {
-            $class = \get_class($callable[0]);
-            $function = $callable[1];
-            $callable = [$class, $function];
-        }
-
-        if ($callable instanceof \Closure) {
-            $callable = new SerializableClosure($callable);
-        }
-
-        try {
-            $serializedCallable = \serialize($callable);
-        } catch (\Throwable $e) {
-            throw new SerializationException('Unsupported callable: ' . $e->getMessage(), 0, $e);
-        }
-
-        $packedArray = $this->packParametersToArray($arrayToRemap, $serializedCallable, $args);
-
-
-        return $this->remapAsync($packedArray);
+        return $this->asyncMap($arrayToRemap, $callable, $args);
     }
 
     /**
@@ -84,11 +67,11 @@ class PromiseWait implements PromiseWaitInterface
 
     /**
      * @param array<mixed> $arrayToRemap
-     * @param mixed $args
+     * @param array<mixed> $args
      *
      * @return array<mixed, mixed>
      */
-    private function remapSync(array $arrayToRemap, callable $callable, array $args): array
+    private function syncMap(array $arrayToRemap, callable $callable, array $args): array
     {
         $resultArray = [];
         foreach ($arrayToRemap as $key => $value) {
@@ -99,18 +82,55 @@ class PromiseWait implements PromiseWaitInterface
     }
 
     /**
-     * @param array<PackedArguments> $packedArray
+     * @param array<mixed> $arrayToRemap
+     * @param array<mixed> $args
      *
-     * @return array<mixed>
+     * @return array<mixed, mixed>
      */
-    private function remapAsync(array $packedArray): array
+    private function asyncMap(array $arrayToRemap, callable $callable, array $args): array
     {
+        $callable = $this->convertObjectsInCallablesToClassnames($callable);
+
+        $serializedCallable = $this->serializeCallable($callable);
+        $packedArray = $this->packParametersToArray($arrayToRemap, $serializedCallable, $args);
+
         return Promise\wait(
             parallelMap(
                 $packedArray,
-                self::CALLABLE,
+                self::PROCESS_SINGLE_ELEMENT,
                 $this->poolFactory->create($this->amphpMaxWorkers),
             )
         );
+    }
+
+    /** @return callable|array<int, string> */
+    private function convertObjectsInCallablesToClassnames(callable $callable)
+    {
+        if (\is_array($callable) && \is_object($callable[0])) {
+            $class = \get_class($callable[0]);
+            $function = (string)$callable[1];
+            $callable = [$class, $function];
+        }
+        return $callable;
+    }
+
+    /**
+     * @param callable|array<int, string> $callable
+     *
+     * @throws SerializationException
+     */
+    private function serializeCallable($callable): string
+    {
+        $serializableCallable = $callable;
+        if ($callable instanceof \Closure) {
+            $serializableCallable = new SerializableClosure($callable);
+        }
+
+        try {
+            $serializedCallable = \serialize($serializableCallable);
+        } catch (\Throwable $e) {
+            throw new SerializationException('Unsupported callable: ' . $e->getMessage(), 0, $e);
+        }
+        return $serializedCallable;
     }
 }
