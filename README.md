@@ -59,6 +59,9 @@ publicplan_parallel_bridge:
 AMPHP_MAX_WORKERS=3
 ```
 
+_info: fill in a "0" for synchronous execution without workers. 
+This can be handy for debugging and some rare Problems with Macs._ 
+
 ## Usage
 
 1. Use PromiseWait in your class to remap async!
