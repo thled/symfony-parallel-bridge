@@ -36,10 +36,14 @@ class PromiseWait implements PromiseWaitInterface
      *
      * @throws MultiReasonException
      *
-     * @return array<mixed>
+     * @return array<mixed, mixed>
      */
     public function parallelMap(array $arrayToRemap, callable $callable, ...$args): array
     {
+        if ($this->amphpMaxWorkers === 0) {
+            return $this->remapSync($arrayToRemap, $callable, $args);
+        }
+
         if (\is_array($callable) && \is_object($callable[0])) {
             $class = \get_class($callable[0]);
             $function = $callable[1];
@@ -51,16 +55,14 @@ class PromiseWait implements PromiseWaitInterface
         }
 
         try {
-            $callable = \serialize($callable);
+            $serializedCallable = \serialize($callable);
         } catch (\Throwable $e) {
             throw new SerializationException('Unsupported callable: ' . $e->getMessage(), 0, $e);
         }
 
-        $packedArray = $this->packParametersToArray($arrayToRemap, $callable, $args);
+        $packedArray = $this->packParametersToArray($arrayToRemap, $serializedCallable, $args);
 
-        if ($this->amphpMaxWorkers === 0) {
-            return $this->remapSync($packedArray);
-        }
+
         return $this->remapAsync($packedArray);
     }
 
@@ -81,16 +83,16 @@ class PromiseWait implements PromiseWaitInterface
     }
 
     /**
-     * @param array<PackedArguments> $packedArray
+     * @param array<mixed> $arrayToRemap
+     * @param mixed $args
      *
-     * @return array<int, mixed>
+     * @return array<mixed, mixed>
      */
-    private function remapSync(array $packedArray): array
+    private function remapSync(array $arrayToRemap, callable $callable, array $args): array
     {
-        $callable = self::CALLABLE;
         $resultArray = [];
-        foreach ($packedArray as $key => $value) {
-            $resultArray[$key] = $callable($value);
+        foreach ($arrayToRemap as $key => $value) {
+            $resultArray[$key] = $callable($value, ...$args);
         }
 
         return $resultArray;
