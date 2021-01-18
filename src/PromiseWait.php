@@ -6,6 +6,7 @@ namespace Publicplan\ParallelBridge;
 
 use Amp\MultiReasonException;
 use Amp\Parallel\Sync\SerializationException;
+use Publicplan\ParallelBridge\Model\PackedArguments;
 use function Amp\ParallelFunctions\parallelMap;
 use Amp\Promise;
 use Opis\Closure\SerializableClosure;
@@ -14,6 +15,7 @@ use Publicplan\ParallelBridge\Factory\PoolFactory;
 
 class PromiseWait implements PromiseWaitInterface
 {
+    private const CALLABLE = [ServiceCaller::class, 'processSingleElement'];
     /** @var PoolFactory */
     private $poolFactory;
 
@@ -55,60 +57,56 @@ class PromiseWait implements PromiseWaitInterface
         }
 
         $packedArray = $this->packParametersToArray($arrayToRemap, $callable, $args);
-        $processSingleElement = [ServiceCaller::class, 'processSingleElement'];
 
         if ($this->amphpMaxWorkers === 0) {
-            return $this->remapSync($packedArray, $processSingleElement);
+            return $this->remapSync($packedArray);
         }
-        return $this->remapAsync($packedArray, $processSingleElement);
+        return $this->remapAsync($packedArray);
     }
 
     /**
      * @param array<mixed> $array
      * @param array<mixed> $additionalParameters
      *
-     * @return array<int, array<string, mixed>>
+     * @return array<int, PackedArguments>
      */
     private function packParametersToArray(array $array, string $serializedCallable, array $additionalParameters): array
     {
         $newArray = [];
         foreach ($array as $element) {
-            $newArray[] = [
-                'element' => $element,
-                'callable' => $serializedCallable,
-                'additionalParameters' => $additionalParameters,
-            ];
+            $newArray[] = new PackedArguments($element, $serializedCallable, $additionalParameters);
         }
 
         return $newArray;
     }
 
     /**
-     * @param array<int, array<string, mixed>> $packedArray
+     * @param array<PackedArguments> $packedArray
      *
      * @return array<int, mixed>
      */
-    private function remapSync(array $packedArray, callable $processSingleElement): array
+    private function remapSync(array $packedArray): array
     {
+        $callable = self::CALLABLE;
         $resultArray = [];
         foreach ($packedArray as $key => $value) {
-            $resultArray[$key] = $processSingleElement($value);
+            $resultArray[$key] = $callable($value);
         }
 
         return $resultArray;
     }
 
     /**
-     * @param array<mixed> $packedArray
+     * @param array<PackedArguments> $packedArray
      *
      * @return array<mixed>
      */
-    private function remapAsync(array $packedArray, callable $processSingleElement): array
+    private function remapAsync(array $packedArray): array
     {
         return Promise\wait(
             parallelMap(
                 $packedArray,
-                $processSingleElement,
+                self::CALLABLE,
                 $this->poolFactory->create($this->amphpMaxWorkers),
             )
         );

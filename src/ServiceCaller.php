@@ -6,20 +6,17 @@ namespace Publicplan\ParallelBridge;
 
 use Opis\Closure\SerializableClosure;
 use Psr\Container\ContainerInterface;
+use Publicplan\ParallelBridge\Model\PackedArguments;
 use TypeError;
 
 class ServiceCaller
 {
-    /**
-     * @param array{"element": mixed, "callable": string, "additionalParameters": array<mixed>} $packedParamArray
-     *
-     * @return mixed
-     */
-    public static function processSingleElement(array $packedParamArray)
+    /** @return mixed */
+    public static function processSingleElement(PackedArguments $packedArguments)
     {
-        $elementToProcess = $packedParamArray['element'];
-        $callable = \unserialize($packedParamArray['callable'], [true]);
-        $additionalParameters = $packedParamArray['additionalParameters'];
+        $elementToProcess = $packedArguments->getElement();
+        $callable = \unserialize($packedArguments->getSerializedCallable(), [true]);
+        $additionalParameters = $packedArguments->getAdditionalParameters();
 
         if ($callable instanceof SerializableClosure) {
             $callable = $callable->getClosure();
