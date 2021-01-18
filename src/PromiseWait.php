@@ -6,12 +6,12 @@ namespace Publicplan\ParallelBridge;
 
 use Amp\MultiReasonException;
 use Amp\Parallel\Sync\SerializationException;
-use Publicplan\ParallelBridge\Model\PackedArguments;
 use function Amp\ParallelFunctions\parallelMap;
 use Amp\Promise;
 use Opis\Closure\SerializableClosure;
-
 use Publicplan\ParallelBridge\Factory\PoolFactory;
+
+use Publicplan\ParallelBridge\Model\PackedArguments;
 
 class PromiseWait implements PromiseWaitInterface
 {
