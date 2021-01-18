@@ -9,12 +9,11 @@ use Amp\MultiReasonException;
 interface PromiseWaitInterface
 {
     /**
-     * @param array<mixed> $arrayToMap
+     * @param array<mixed> $arrayToRemap
      * @param mixed $args
      *
-     * @throws MultiReasonException
-     *
      * @return array<mixed>
+     * @throws MultiReasonException
      */
-    public function parallelMap(array $arrayToMap, callable $callable, ...$args): array;
+    public function parallelMap(array $arrayToRemap, callable $callable, ...$args): array;
 }
