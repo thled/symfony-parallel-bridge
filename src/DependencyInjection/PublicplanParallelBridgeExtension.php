@@ -20,7 +20,6 @@ class PublicplanParallelBridgeExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $poolFactoryDefinition = $container->getDefinition('publicplan_parallel_bridge.factory.pool_factory');
-        $poolFactoryDefinition->setArgument(0, $config['amphp_max_worker']);
-        $poolFactoryDefinition->setArgument(1, $config['project_dir']);
+        $poolFactoryDefinition->setArgument(0, $config['project_dir']);
     }
 }
